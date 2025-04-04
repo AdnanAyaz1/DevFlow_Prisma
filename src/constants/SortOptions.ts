@@ -6,9 +6,4 @@ export const tagDetailsSort = [
   "Least Popular",
 ];
 export const tagSort = ["Oldest", "Newest", "Most Popular", "Least Popular"];
-export const userSort = [
-  "Oldest",
-  "Newest",
-  "Most Popular",
-  "Highest Reputation",
-];
+export const userSort = ["Oldest", "Newest", "Highest Reputation"];

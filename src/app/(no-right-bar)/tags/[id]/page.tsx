@@ -44,7 +44,7 @@ export default async function Page({ params, searchParams }: PageProps) {
   if (search) {
     filterQuery.OR = [
       { title: { contains: search, mode: "insensitive" } },
-      { description: { contains: search, mode: "insensitive" } },
+      { content: { contains: search, mode: "insensitive" } },
     ];
   }
 
@@ -80,7 +80,9 @@ export default async function Page({ params, searchParams }: PageProps) {
     <div>
       <div className="flex items-center gap-2 ">
         <h1 className="h1-bold order-2">
-          {tag?.title.toLowerCase() === "js" ? "JavaScript" : tag?.title.toUpperCase()}
+          {tag?.title.toLowerCase() === "js"
+            ? "JavaScript"
+            : tag?.title.toUpperCase()}
         </h1>
         <i
           className={`${getDeviconClass(tag?.title as string)} text-[20px] order-1 `}

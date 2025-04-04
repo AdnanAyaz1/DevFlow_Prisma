@@ -21,7 +21,8 @@ const Bookmark = ({
     bookmarks?.includes(questionId)
   );
 
-  const handleBookmark = async () => {
+  const handleBookmark = async (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
     if (!userId) {
       toast({
         title: "Action Denied",

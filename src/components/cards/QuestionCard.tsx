@@ -39,7 +39,6 @@ const QuestionCard = ({
       <div
         className="rounded-lg bg-light-900 border-[1px] border-[#C8CBD954]  max-sm:px-[10px] max-sm:py- [20px] shadow-md px-[45px] py-[36px] dark:dark-gradient dark:border-none dark:shadow-question-card-dark dark:backdrop-blur-83 cursor-pointer "
         onClick={() => {
-          if (bookmark) return;
           router.push(routes.question_details(question.id));
         }}
       >
@@ -49,8 +48,8 @@ const QuestionCard = ({
           </h1>
           {bookmark && (
             <Bookmark
-              questionId={JSON.parse(JSON.stringify(question.id))}
-              userId={JSON.parse(JSON.stringify(userId)) as string}
+              questionId={question.id}
+              userId={userId as string}
               bookmarks={bookmarks as string[]}
             />
           )}
@@ -94,7 +93,7 @@ const QuestionCard = ({
       {userId == question?.author.id && (
         <Link
           className={`absolute ${bookmark ? "right-20" : "right-12"}  z-20 bottom-10 max-sm:right-2 sm:top-10`}
-          href={routes.edit_question(JSON.parse(JSON.stringify(question.id)))}
+          href={routes.edit_question(question.id)}
         >
           <Edit2Icon className="w-6 h-4 text-blue-700" />
         </Link>

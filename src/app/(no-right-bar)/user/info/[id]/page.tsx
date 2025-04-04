@@ -1,3 +1,4 @@
+import { auth } from "@/auth";
 import Answers from "@/components/Answers";
 import QuestionCard from "@/components/cards/QuestionCard";
 import QuestionAnswerSelector from "@/components/QuestionAnswerSelector";
@@ -21,6 +22,7 @@ const page = async ({
   const { tab, index } = await searchParams;
   const activeTab = tab || "questions";
   const indexNumber = Number(index) || 3;
+  const session = await auth();
   let datalength;
   const user: User | null = await db.user.findUnique({
     where: {
@@ -56,12 +58,14 @@ const page = async ({
         <div className="w-full mt-2">
           <div className="flex max-sm:flex-col gap-2  sm:flex-between w-full">
             <h1 className="h1-bold">{user?.name}</h1>
-            <Link
-              href={`/user/${user?.id}`}
-              className="dark:bg-dark-400 bg-light-700 my-3 paragraph-semibold flex-center rounded-lg w-[173px] h-[45px]"
-            >
-              Edit Profile
-            </Link>
+            {user?.id === session?.user?.id && (
+              <Link
+                href={`/user/${user?.id}`}
+                className="dark:bg-dark-400 bg-light-700 my-3 paragraph-semibold flex-center rounded-lg w-[173px] h-[45px]"
+              >
+                Edit Profile
+              </Link>
+            )}
           </div>
           <p className=" paragraph-regular dark:text-light-800">
             {user?.email}
@@ -71,7 +75,7 @@ const page = async ({
               <Link2Icon className="w-4 h-4 dark:text-light-500" />
               <Link
                 href={user?.portfolio || routes.edit_user(user?.id || "")}
-                className="paragraph-medium dark:text-blue-400 text-blue-500"
+                className="paragraph-medium dark:text-blue-400 text-blue-500 line-clamp-1"
               >
                 {user?.portfolio ? user.portfolio : "add a link"}
               </Link>
