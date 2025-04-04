@@ -43,11 +43,13 @@ const QuestionDetails = async ({
     question.views += 1;
   }
 
-  const user = await db.user.findUnique({
-    where: {
-      id: session?.user.id as string,
-    },
-  });
+  const user = session?.user.id
+    ? await db.user.findUnique({
+        where: {
+          id: session?.user.id as string,
+        },
+      })
+    : null;
 
   const formattedContent = question?.content
     .replace(/\\/g, "")
@@ -165,7 +167,7 @@ const QuestionDetails = async ({
           <section className="my-[50px]">
             <AnswerForm
               authorId={session?.user.id as string}
-              questionId={JSON.parse(JSON.stringify(question?.id))}
+              questionId={question?.id}
             />
           </section>
         </div>
