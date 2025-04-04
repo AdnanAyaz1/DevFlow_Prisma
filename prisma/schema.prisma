@@ -1,0 +1,84 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         String     @id @default(uuid())
+  email      String     @unique
+  name       String?    @unique
+  bookmarks  String[]
+  bio        String?
+  image      String?
+  location   String?
+  portfolio  String?
+  reputation Int        @default(0)
+  provider   String
+  password   String?
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  questions  Question[]
+  answers    Answer[]
+  voteCaster VoteCaster[]
+}
+
+model Question {
+  id           String       @id @default(uuid())
+  title        String
+  content      String
+  authorId     String
+  author       User         @relation(fields: [authorId], references: [id])
+  upVotes      Int          @default(0)
+  downVotes    Int          @default(0)
+  answers      Answer[]
+  views        Int          @default(0)
+  viewedBy     String[]
+  tags         String[]
+  voteCastedBy VoteCaster[]
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+}
+
+model VoteCaster {
+  id            String    @id @default(uuid())
+  type          String
+  voteCasterId  String    
+  voteCaster    User      @relation(fields: [voteCasterId], references: [id], onDelete: Cascade)
+  question      Question? @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  questionId    String?
+  answer        Answer?   @relation(fields: [answerId], references: [id], onDelete: Cascade)
+  answerId      String?
+}
+
+model Answer {
+  id           String       @id @default(uuid())
+  content      String
+  authorId     String
+  author       User         @relation(fields: [authorId], references: [id])
+  questionId   String
+  question     Question     @relation(fields: [questionId], references: [id])
+  upVotes      Int          @default(0)
+  downVotes    Int          @default(0)
+  voteCastedBy VoteCaster[]
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+}
+
+model Tag {
+  id          String   @id @default(uuid())
+  title       String   @unique
+  description String?
+  questions   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
