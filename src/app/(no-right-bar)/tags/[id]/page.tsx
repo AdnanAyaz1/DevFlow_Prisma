@@ -20,7 +20,7 @@ interface PageProps {
 }
 
 export default async function Page({ params, searchParams }: PageProps) {
-  const { id } = params;
+  const { id } = await params;
   const session = await auth();
   const user = await db.user.findUnique({
     where: {
