@@ -44,7 +44,7 @@ export interface MySearchParams {
 }
 
 export interface ExtendedQuestion extends Question {
-  answers?: Answer[];
+  answers: Answer[];
   author: User;
 }
 
