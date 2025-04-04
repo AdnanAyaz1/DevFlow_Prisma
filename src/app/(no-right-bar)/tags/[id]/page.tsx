@@ -9,16 +9,17 @@ import { Question } from "@prisma/client";
 import { FilterQuery, SortOrder } from "mongoose";
 import React from "react";
 
-const page = async ({
-  params,
-  searchParams,
-}: {
-  searchParams: {
-    search: string;
-    sort: string;
+interface PageProps {
+  params: {
+    id: string;
   };
-  params: { id: string };
-}) => {
+  searchParams: {
+    search?: string;
+    sort?: string;
+  };
+}
+
+export default async function Page({ params, searchParams }: PageProps) {
   const { id } = params;
   const session = await auth();
   const user = await db.user.findUnique({
@@ -91,6 +92,4 @@ const page = async ({
       </div>
     </div>
   );
-};
-
-export default page;
+}
