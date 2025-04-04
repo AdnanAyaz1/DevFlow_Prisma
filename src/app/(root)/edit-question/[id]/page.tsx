@@ -3,8 +3,8 @@ import React from "react";
 import { db } from "@/lib/primsadb";
 import { ExtendedQuestion } from "@/types/types";
 
-const EditQuestion = async ({ params }: { params: { id: string } }) => {
-  const { id } = params;
+const EditQuestion = async ({ params }: { params: Promise<{ id: string }> }) => {
+  const { id } = await params;
   const question = await db.question.findUnique({
     where: {
       id: id,

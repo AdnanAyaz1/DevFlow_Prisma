@@ -14,12 +14,13 @@ const page = async ({
   searchParams,
   params,
 }: {
-  searchParams: { tab: string; index: string };
-  params: { id: string };
+  searchParams: Promise<{ tab: string; index: string }>;
+  params: Promise<{ id: string }>;
 }) => {
-  const { id } = params;
-  const activeTab = searchParams?.tab || "questions";
-  const index = Number(searchParams?.index) || 3;
+  const { id } = await params;
+  const { tab, index } = await searchParams;
+  const activeTab = tab || "questions";
+  const indexNumber = Number(index) || 3;
   let datalength;
   const user: User | null = await db.user.findUnique({
     where: {
@@ -114,14 +115,14 @@ const page = async ({
 
       {activeTab == "questions" ? (
         <div className="space-y-10">
-          {questions.slice(0, index).map((ques, i) => {
+          {questions.slice(0, indexNumber).map((ques, i) => {
             datalength = questions.length;
             return <QuestionCard question={ques} key={i} />;
           })}
         </div>
       ) : (
         <div className="space-y-10">
-          {answers.slice(0, index).map((ans, i) => {
+          {answers.slice(0, indexNumber).map((ans, i) => {
             datalength = answers.length;
             return <Answers answer={ans} key={i} />;
           })}

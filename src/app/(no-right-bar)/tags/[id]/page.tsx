@@ -4,35 +4,42 @@ import LocalSearch from "@/components/search/LocalSearch";
 import Sort from "@/components/sort/Sort";
 import { tagDetailsSort } from "@/constants/SortOptions";
 import { db } from "@/lib/primsadb";
+import { getDeviconClass } from "@/lib/utils";
 import { ExtendedQuestion } from "@/types/types";
 import { Question } from "@prisma/client";
 import { FilterQuery, SortOrder } from "mongoose";
 import React from "react";
 
 interface PageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
-  searchParams: {
+  }>;
+  searchParams: Promise<{
     search?: string;
     sort?: string;
-  };
+  }>;
 }
 
 export default async function Page({ params, searchParams }: PageProps) {
-  const { id } = await params;
+  // Await the params
+  const resolvedParams = await params;
+  const { id } = resolvedParams;
+
   const session = await auth();
   const user = await db.user.findUnique({
     where: {
       id: session?.user.id,
     },
   });
-  const { search, sort } = searchParams;
+
+  const { search, sort } = await searchParams;
+
   const tag = await db.tag.findUnique({
     where: {
       id,
     },
   });
+
   const filterQuery: FilterQuery<Question> = {};
   if (search) {
     filterQuery.OR = [
@@ -40,8 +47,10 @@ export default async function Page({ params, searchParams }: PageProps) {
       { description: { contains: search, mode: "insensitive" } },
     ];
   }
+
   type SortCriteria = Record<string, SortOrder>;
   const sortCriteria: SortCriteria = {};
+
   if (sort == "Newest") {
     sortCriteria.createdAt = "desc";
   } else if (sort == "Oldest") {
@@ -52,6 +61,7 @@ export default async function Page({ params, searchParams }: PageProps) {
     filterQuery.answers = [];
     sortCriteria.createdAt = "asc";
   }
+
   const questions = await db.question.findMany({
     where: {
       ...filterQuery,
@@ -68,13 +78,18 @@ export default async function Page({ params, searchParams }: PageProps) {
 
   return (
     <div>
-      <h1 className="h1-bold">
-        {tag?.title.toLowerCase() === "js" ? "JavaScript" : tag?.title}
-      </h1>
+      <div className="flex items-center gap-2 ">
+        <h1 className="h1-bold order-2">
+          {tag?.title.toLowerCase() === "js" ? "JavaScript" : tag?.title.toUpperCase()}
+        </h1>
+        <i
+          className={`${getDeviconClass(tag?.title as string)} text-[20px] order-1 `}
+        />
+      </div>
       <h3 className="body-medium dark:text-light-700 my-6">
         {tag?.description}
       </h3>
-      <div className="flex max-sm:flex-col  sm:flex-between max-w-[800px] my-6 gap-3">
+      <div className="flex max-sm:flex-col sm:flex-between max-w-[800px] my-6 gap-3">
         <LocalSearch placeholder="Question title,description" />
         <Sort data={tagDetailsSort} />
       </div>

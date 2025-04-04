@@ -18,11 +18,13 @@ const QuestionDetails = async ({
   params,
   searchParams,
 }: {
-  params: { id: string };
-  searchParams: { sort: string };
+  params: Promise<{
+    id: string;
+  }>;
+  searchParams: Promise<{ sort: string }>;
 }) => {
-  const { id } = params;
-  const { sort } = searchParams;
+  const { id } = await params;
+  const { sort } = await searchParams;
   const session = await auth();
 
   const { data } = await axios.post(
@@ -36,7 +38,6 @@ const QuestionDetails = async ({
   const {
     data: { question },
   } = data;
-
 
   if (data.incrementView) {
     question.views += 1;
@@ -70,8 +71,7 @@ const QuestionDetails = async ({
             <div className="flex-center gap-2">
               <Image
                 src={
-                  question?.author.image ||
-                  "/images/person-placeholder.jpeg"
+                  question?.author.image || "/images/person-placeholder.jpeg"
                 }
                 alt="user-image"
                 height={25}
@@ -121,10 +121,7 @@ const QuestionDetails = async ({
               />
               <p className="small-regular text-dark-400 dark:text-light-700">
                 asked{" "}
-                {formatDistanceToNow(
-                  new Date(question?.createdAt as Date)
-                )}{" "}
-                ago
+                {formatDistanceToNow(new Date(question?.createdAt as Date))} ago
               </p>
             </div>
 
@@ -160,10 +157,7 @@ const QuestionDetails = async ({
                 {/* <AnswersSort /> */}
               </div>
 
-              <AnswersFetch
-                sort={sort}
-                questionId={question?.id}
-              />
+              <AnswersFetch sort={sort} questionId={question?.id} />
             </section>
           )}
 
