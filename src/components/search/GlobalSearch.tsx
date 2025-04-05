@@ -2,10 +2,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import GlobalSearchInput from "../GlobalSearchInput";
 import GlobalSearchFilter from "../filter/GlobalSearchFilter";
-import { api } from "@/lib/api";
 import { Question, Tag, User } from "@prisma/client";
 import Image from "next/image";
-import Link from "next/link";
 import { routes } from "@/constants/routes";
 import axios from "axios";
 import { useRouter } from "next/navigation";
