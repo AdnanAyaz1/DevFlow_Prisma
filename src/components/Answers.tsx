@@ -41,7 +41,7 @@ const Answers = async ({ answer }: { answer: ExtendedAnswer }) => {
               alt="upvote-icon"
               val={answer?.upVotes}
               type="upVote"
-              session={session?.user.id as string}
+              session={session?.user?.id as string}
             />
             <Votes
               answerId={answer.id}
@@ -49,7 +49,7 @@ const Answers = async ({ answer }: { answer: ExtendedAnswer }) => {
               alt="downVote-icon"
               val={answer?.downVotes}
               type="downVote"
-              session={session?.user.id as string}
+              session={session?.user?.id as string}
             />
           </div>
         </div>
