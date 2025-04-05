@@ -16,7 +16,7 @@ const QuestionCards = async ({
           <QuestionCard
             key={ques.id}
             question={ques}
-            userId={session?.user.id}
+            userId={session?.user?.id}
           />
         ))
       ) : (
