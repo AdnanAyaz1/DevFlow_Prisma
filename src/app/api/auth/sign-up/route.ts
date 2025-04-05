@@ -7,7 +7,6 @@ import { apiResponse, handleApiError } from "@/lib/api-utils";
 
 export async function POST(req: Request) {
   const { username, email, password } = await req.json();
-  console.log(username, email, password);
   try {
     // Validate the data using Zod schema
     const validatedData = signUpSchemaApi.safeParse({
