@@ -1,13 +1,12 @@
-import { auth } from "@/auth";
+import { getCurrentUser } from "@/app/server-actions/getCurrentUser";
+import { getTags } from "@/app/server-actions/getTags";
 import QuestionCard from "@/components/cards/QuestionCard";
+import ErrorState from "@/components/ErrorState";
 import LocalSearch from "@/components/search/LocalSearch";
 import Sort from "@/components/sort/Sort";
 import { tagDetailsSort } from "@/constants/SortOptions";
-import { db } from "@/lib/primsadb";
 import { getDeviconClass } from "@/lib/utils";
 import { ExtendedQuestion } from "@/types/types";
-import { Question } from "@prisma/client";
-import { FilterQuery, SortOrder } from "mongoose";
 import React from "react";
 
 interface PageProps {
@@ -22,59 +21,31 @@ interface PageProps {
 
 export default async function Page({ params, searchParams }: PageProps) {
   // Await the params
-  const resolvedParams = await params;
-  const { id } = resolvedParams;
-
-  const session = await auth();
-  const user = await db.user.findUnique({
-    where: {
-      id: session?.user.id,
-    },
-  });
-
+  const { id } = await params;
   const { search, sort } = await searchParams;
 
-  const tag = await db.tag.findUnique({
-    where: {
-      id,
-    },
-  });
+  // the server action mostly returns an array on generic type of i am also getting user in the form of an array
+  const { data: userArray } = await getCurrentUser();
 
-  const filterQuery: FilterQuery<Question> = {};
-  if (search) {
-    filterQuery.OR = [
-      { title: { contains: search, mode: "insensitive" } },
-      { content: { contains: search, mode: "insensitive" } },
-    ];
+  const {
+    data: questions,
+    success,
+    message,
+    tag,
+    noOfPages,
+  } = await getTags({ id, search, sort });
+
+  if (!success) {
+    return (
+      <ErrorState
+        image={"/images/error.png"}
+        title={"Oops! Something went wrong"}
+        description={message}
+      />
+    );
   }
 
-  type SortCriteria = Record<string, SortOrder>;
-  const sortCriteria: SortCriteria = {};
-
-  if (sort == "Newest") {
-    sortCriteria.createdAt = "desc";
-  } else if (sort == "Oldest") {
-    sortCriteria.createdAt = "asc";
-  } else if (sort == "Most Popular") {
-    sortCriteria.upVotes = "desc";
-  } else if (sort == "Un Answered") {
-    filterQuery.answers = [];
-    sortCriteria.createdAt = "asc";
-  }
-
-  const questions = await db.question.findMany({
-    where: {
-      ...filterQuery,
-      tags: {
-        has: tag?.title,
-      },
-    },
-    include: {
-      author: true,
-      answers: true,
-    },
-    orderBy: sortCriteria,
-  });
+  const user = (userArray && userArray[0]) || null;
 
   return (
     <div>

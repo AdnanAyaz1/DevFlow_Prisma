@@ -1,9 +1,15 @@
 "use server";
 
 import { auth } from "@/auth";
-import { handleActionError, serverActionResponse } from "@/lib/action-utils";
+import {
+  handleActionError,
+  ServerActionResponse,
+  serverActionResponse,
+} from "@/lib/action-utils";
 import { db } from "@/lib/primsadb";
-export const getCurrentUser = async () => {
+import { User } from "@prisma/client";
+
+export const getCurrentUser = async (): Promise<ServerActionResponse<User>> => {
   try {
     const session = await auth();
     if (!session?.user) {

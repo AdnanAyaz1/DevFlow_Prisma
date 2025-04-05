@@ -4,7 +4,7 @@ import LocalSearch from "@/components/search/LocalSearch";
 import Sort from "@/components/sort/Sort";
 import { routes } from "@/constants/routes";
 import { userSort } from "@/constants/SortOptions";
-import { SearchParams, UserType } from "@/types/types";
+import { SearchParams } from "@/types/types";
 import { User } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
