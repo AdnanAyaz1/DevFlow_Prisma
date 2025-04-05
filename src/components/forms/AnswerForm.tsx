@@ -17,7 +17,7 @@ import { Button } from "@/components/ui/button";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import axios from "axios";
 import { toast } from "@/hooks/use-toast";
-import { api } from "@/lib/api";
+
 
 const AnswerForm = ({
   authorId,
