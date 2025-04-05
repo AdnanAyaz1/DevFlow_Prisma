@@ -2,7 +2,6 @@
 import {
   serverActionResponse,
   handleActionError,
-  ServerActionResponse,
 } from "@/lib/action-utils";
 import { db } from "@/lib/primsadb";
 

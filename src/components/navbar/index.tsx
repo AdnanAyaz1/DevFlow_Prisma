@@ -18,7 +18,7 @@ const Navbar = async () => {
     },
   });
   return (
-    <nav className="sticky top-0 flex-between gap-12 px-[20px] md:px-[50px] py-[20px] max-h-[100px] z-20  bg-white border-b-[1px] border-gray-100/30    dark:bg-dark-200">
+    <nav className="sticky top-0 flex-between gap-12 px-[20px] md:px-[50px] py-[20px] max-h-[100px] z-20  bg-white border-b-[1px] dark:bg-dark-secondaryRight dark:border-dark-border">
       {/* Logo */}
       <Logo />
       {/* Global Search */}

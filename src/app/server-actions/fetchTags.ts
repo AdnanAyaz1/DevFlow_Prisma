@@ -1,8 +1,12 @@
 "use server";
 
+import {
+  handleActionError,
+  ServerActionResponse,
+  serverActionResponse,
+} from "@/lib/action-utils";
 import { db } from "@/lib/primsadb";
-import { Tag } from "@prisma/client";
-import { FilterQuery } from "mongoose";
+import { Prisma, Tag } from "@prisma/client";
 
 interface FetchTagsParams {
   search?: string;
@@ -16,11 +20,11 @@ export async function fetchTags({
   sort,
   pageSize,
   pageNumber,
-}: FetchTagsParams) {
+}: FetchTagsParams): Promise<ServerActionResponse<Tag>> {
   try {
     const skip = (Number(pageNumber) - 1) * pageSize || 0;
     const limit = Number(pageSize);
-    const filterQuery: FilterQuery<Tag> = {};
+    const filterQuery: Prisma.TagWhereInput = {};
 
     if (search) {
       filterQuery.OR = [
@@ -39,6 +43,7 @@ export async function fetchTags({
     const totalTags = await db.tag.count({
       where: filterQuery,
     });
+
     const noOfPages = Math.ceil(totalTags / pageSize);
     const tags = await db.tag.findMany({
       where: filterQuery,
@@ -46,9 +51,8 @@ export async function fetchTags({
       take: limit,
       orderBy: sortCriteria,
     });
-    return { tags, noOfPages };
+    return serverActionResponse("Tags Fetched", true, 200, tags, noOfPages);
   } catch (error) {
-    console.error("Error fetching tags:", error);
-    return { tags: [], error: "Failed to fetch tags. Please try again." };
+    return handleActionError(error);
   }
 }

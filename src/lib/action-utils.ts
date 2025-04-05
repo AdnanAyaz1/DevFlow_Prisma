@@ -4,20 +4,23 @@ export type ServerActionResponse<T = undefined> = {
   message: string;
   success: boolean;
   status: number;
-  data?: T;
+  data?: T[];
+  noOfPages?: number;
 };
 
 export const serverActionResponse = <T>(
   message: string,
   success: boolean,
   status: number,
-  data?: T
+  data?: T[],
+  noOfPages?: number
 ): ServerActionResponse<T> => {
   return {
     message,
     success,
     status,
     data,
+    noOfPages,
   };
 };
 

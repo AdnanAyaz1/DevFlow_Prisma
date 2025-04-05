@@ -44,12 +44,12 @@ const HomeTagFilter = () => {
             tag={tag}
             icon={false}
             classNameTag={`cursor-pointer ${
-              selectedTags.includes(tag) ? "dark:bg-dark-400" : " "
+              selectedTags.includes(tag) ? "dark:bg-dark-400" : ""
             } h-[42px]`}
             classNameText={`body-medium text-[16px] ${
               selectedTags.includes(tag)
                 ? "primary-text-gradient"
-                : "text-light-400"
+                : "text-light-500"
             }`}
           />
         </div>

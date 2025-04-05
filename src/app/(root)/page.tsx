@@ -3,9 +3,11 @@ import HomeTagFilter from "@/components/filter/HomeTagFilter";
 import { PaginationComponent } from "@/components/pagination";
 import LocalSearch from "@/components/search/LocalSearch";
 import { routes } from "@/constants/routes";
-import { SearchParams } from "@/types/types";
-import axios from "axios";
+import { ExtendedQuestion, SearchParams } from "@/types/types";
 import Link from "next/link";
+import { getQuestions } from "../server-actions/getQuestions";
+import EmptyState from "@/components/EmptyState";
+import ErrorState from "@/components/ErrorState";
 
 export default async function Home({ searchParams }: SearchParams) {
   const awaitedSearchParams = await searchParams;
@@ -15,16 +17,23 @@ export default async function Home({ searchParams }: SearchParams) {
   const pageNumber = awaitedSearchParams?.page || "1";
   const pageLimit = 5;
 
-  const { data } = await axios.post(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/questions/get-questions`,
-    {
-      searchQuery,
-      filter,
-      pageNumber,
-      pageLimit,
-      sort,
-    }
-  );
+  // const { data } = await axios.post(
+  //   `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/questions/get-questions`,
+  //   {
+  //     searchQuery,
+  //     filter,
+  //     pageNumber,
+  //     pageLimit,
+  //     sort,
+  //   }
+  // );
+
+  const { data, noOfPages, success, message } = await getQuestions({
+    pageNumber: Number(pageNumber),
+    pageSize: pageLimit,
+    searchQuery,
+    sort,
+  });
 
   return (
     <main className="min-h-screen flex flex-col justify-between">
@@ -42,9 +51,31 @@ export default async function Home({ searchParams }: SearchParams) {
         </div>
         <LocalSearch placeholder="Question" />
         <HomeTagFilter />
-        <QuestionCards questions={data.data} />
+        {success ? (
+          data && data?.length > 0 ? (
+            <QuestionCards questions={data as ExtendedQuestion[]} />
+          ) : (
+            <EmptyState
+              title={"There are no questions yet"}
+              description={
+                "Be the first to break the silence! 🚀 Ask a Question and kickstart the discussion. our query could be the next big thing others learn from. Get involved! 💡"
+              }
+              buttontext={"Ask a Question"}
+              buttonUrl={routes.ask_question}
+              image={"/images/emptyState.png"}
+            />
+          )
+        ) : (
+          <ErrorState
+            image={"/images/error.png"}
+            title={"Something went wrong"}
+            description={`We couldn't fetch questions. ${message}. Please try again later.`}
+          />
+        )}
       </div>
-      {data.noOfPages > 1 && <PaginationComponent noOfPages={data.noOfPages} />}
+      {noOfPages && noOfPages > 1 && (
+        <PaginationComponent noOfPages={noOfPages} />
+      )}
     </main>
   );
 }

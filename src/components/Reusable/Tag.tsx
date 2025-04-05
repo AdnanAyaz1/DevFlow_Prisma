@@ -21,12 +21,12 @@ const Tag = ({
   return (
     <div
       className={twMerge(
-        " rounded-lg px-[16px] py-[8px] bg-light-800 dark:bg-dark-400/60  uppercase flex gap-2 h-[29px] items-center w-fit shadow-md",
+        " rounded-lg px-[16px] py-[8px] bg-light-800 dark:bg-dark-300  uppercase flex gap-2 h-[29px] items-center w-fit shadow-md",
         classNameTag
       )}
     >
       {icon && <i className={`${getDeviconClass(tag)} text-[14px] `} />}
-      <span className={twMerge("text-light-400 subtle-medium", classNameText)}>
+      <span className={twMerge("text-light-700 subtle-medium", classNameText)}>
         {tag}
       </span>
       {remove && (

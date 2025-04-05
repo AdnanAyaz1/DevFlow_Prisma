@@ -1,5 +1,7 @@
 import { fetchTags } from "@/app/server-actions/fetchTags";
 import TagCard from "@/components/cards/TagCard";
+import EmptyState from "@/components/EmptyState";
+import ErrorState from "@/components/ErrorState";
 import { PaginationComponent } from "@/components/pagination";
 import LocalSearch from "@/components/search/LocalSearch";
 import Sort from "@/components/sort/Sort";
@@ -14,7 +16,7 @@ const page = async ({ searchParams }: SearchParams) => {
   const { search, sort, page } = await searchParams;
   const pageSize = 9;
 
-  const { tags, error, noOfPages } = await fetchTags({
+  const { data, message, success, status, noOfPages } = await fetchTags({
     search,
     sort,
     pageSize,
@@ -30,18 +32,28 @@ const page = async ({ searchParams }: SearchParams) => {
           <Sort data={tagSort} />
         </div>
 
-        {error ? (
-          <div className="text-red-500">{error}</div>
-        ) : tags.length > 0 ? (
+        {!success ? (
+          <ErrorState
+            image="/images/error.png"
+            title={"Something went wrong"}
+            description={message}
+          />
+        ) : data && data?.length > 0 ? (
           <div className="mt-[49px] flex flex-wrap gap-[10px]">
-            {tags.map((tag) => (
+            {data.map((tag: Tag) => (
               <Link key={tag.id} href={routes.tags_info(tag.id)}>
                 <TagCard tag={tag as Tag} />
               </Link>
             ))}
           </div>
         ) : (
-          <div className="text-gray-500">No tags found.</div>
+          <EmptyState
+            image="/images/emptyState.png"
+            title="No tags found"
+            description="No tags found"
+            buttontext="Ask a Question"
+            buttonUrl={routes.ask_question}
+          />
         )}
       </div>
       {noOfPages && noOfPages > 1 && (
