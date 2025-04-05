@@ -31,7 +31,7 @@ const QuestionDetails = async ({
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/questions/get-question-byId`,
     {
       questionId: id,
-      userId: session?.user.id as string,
+      userId: session?.user?.id as string,
     }
   );
 
@@ -43,7 +43,7 @@ const QuestionDetails = async ({
     question.views += 1;
   }
 
-  const user = session?.user.id
+  const user = session?.user?.id
     ? await db.user.findUnique({
         where: {
           id: session?.user.id as string,
@@ -90,7 +90,7 @@ const QuestionDetails = async ({
                 src="/icons/upvote.svg"
                 alt="upVote"
                 val={question?.upVotes}
-                session={session?.user.id as string}
+                session={session?.user?.id as string}
                 questionId={question?.id}
               />
               <Votes
@@ -98,7 +98,7 @@ const QuestionDetails = async ({
                 src="/icons/downvote.svg"
                 alt="downVote"
                 val={question?.downVotes}
-                session={session?.user.id as string}
+                session={session?.user?.id as string}
                 questionId={question?.id}
               />
               <Bookmark
@@ -166,7 +166,7 @@ const QuestionDetails = async ({
           {/*Submit Answer */}
           <section className="my-[50px]">
             <AnswerForm
-              authorId={session?.user.id as string}
+              authorId={session?.user?.id as string}
               questionId={question?.id}
             />
           </section>
