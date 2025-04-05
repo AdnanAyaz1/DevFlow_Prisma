@@ -12,7 +12,7 @@ const Page = async () => {
   return (
     <div>
       <h1 className="h1-bold mb-[36px]">Ask a Question</h1>
-      <QuestionForm id={session.user.id} />
+      <QuestionForm id={session?.user?.id} />
     </div>
   );
 };
