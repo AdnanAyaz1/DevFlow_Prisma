@@ -38,7 +38,7 @@ export default async function Home({ searchParams }: SearchParams) {
   return (
     <main className="min-h-screen flex flex-col justify-between">
       <div>
-        <div className="flex-between">
+        <div className="flex-between max-sm:flex-col gap-3">
           <h1 className="h1-bold">All Questions</h1>
           <Link
             href={routes.ask_question}
@@ -73,9 +73,9 @@ export default async function Home({ searchParams }: SearchParams) {
           />
         )}
       </div>
-      {noOfPages && noOfPages > 1 && (
+      {noOfPages && noOfPages > 1 ? (
         <PaginationComponent noOfPages={noOfPages} />
-      )}
+      ) : null}
     </main>
   );
 }

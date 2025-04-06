@@ -17,7 +17,7 @@ const AuthFormsWrapper = ({
 
   return (
     <main
-      className="rounded-lg px-[32px] py-[40px] bg-light-800 w-[520px] shadow-auth-form-shadow-light dark:bg-dark-400/70 dark:border-[1px] border-dark-300
+      className="rounded-lg max-sm:px-4 max-sm:py-8 px-[32px] py-[40px] bg-light-800 max-w-[520px] w-full shadow-auth-form-shadow-light dark:bg-dark-400/70 dark:border-[1px] border-dark-300
   "
     >
       {/* header */}

@@ -45,7 +45,7 @@ const page = async ({ searchParams }: SearchParams) => {
                   <Link
                     href={routes.user_info(user.id)}
                     key={key}
-                    className="w-[260px] py-[30px] rounded-[10px] dark:bg-dark-300 border-[1px] dark:border-dark-400 bg-light-850/70 shadow-md border-light-800 flex-center flex-col gap-2"
+                    className="w-[260px] py-[30px] rounded-[10px] dark:bg-dark-300 border-[1px] dark:border-dark-400 bg-light-850/70 shadow-md border-light-800 flex-center flex-col gap-2 px-4"
                   >
                     <Image
                       src={user.image || "/images/person-placeholder.jpeg"}
@@ -54,8 +54,10 @@ const page = async ({ searchParams }: SearchParams) => {
                       width={100}
                       className="object-cover rounded-full aspect-square"
                     />
-                    <h3 className="h3-bold">{user.name}</h3>
-                    <p className="body-regular text-light-500">{user.email}</p>
+                    <h3 className="h3-bold ">{user.name}</h3>
+                    <p className="body-regular text-light-500 max-w-sm text-center">
+                      {user.email}
+                    </p>
                   </Link>
                 );
               })

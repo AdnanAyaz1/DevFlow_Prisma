@@ -50,7 +50,7 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className="min-h-screen bg-auth-bg bg-no-repeat bg-center bg-cover dark:bg-auth-bg-dark flex-center">
+    <div className="min-h-screen bg-auth-bg bg-no-repeat bg-center bg-cover dark:bg-auth-bg-dark flex-center px-4 py-8">
       <div
         className="w-full max-w-[520px] h-[381px]
       py-[40px] px-[32px] bg-dark-300/80 rounded-lg"

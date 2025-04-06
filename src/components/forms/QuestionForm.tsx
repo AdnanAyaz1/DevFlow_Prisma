@@ -37,7 +37,7 @@ const QuestionForm = ({
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const {data:session} = useSession();
+  const { data: session } = useSession();
 
   const form = useForm<z.infer<typeof questionSchema>>({
     resolver: zodResolver(questionSchema),
@@ -47,8 +47,6 @@ const QuestionForm = ({
       tags: question?.tags || [],
     },
   });
-
-  
 
   const handleSubmit = async (data: z.infer<typeof questionSchema>) => {
     setIsLoading(true);
@@ -221,7 +219,7 @@ const QuestionForm = ({
                     onKeyDown={(e) => handleInputTags(e, field)}
                     className="paragraph-regular bg-light-800 dark:bg-dark-300 light-border-2 text-dark-300 dark:text-light-700 no-focus min-h-12 rounded-1.5 border-0 mb-4"
                   />
-                  <div className="flex gap-6">
+                  <div className="flex gap-6 flex-wrap">
                     {field.value.length > 0 &&
                       field.value.map((tag, i) => (
                         <Tag

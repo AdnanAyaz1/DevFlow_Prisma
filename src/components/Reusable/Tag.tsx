@@ -26,7 +26,9 @@ const Tag = ({
       )}
     >
       {icon && <i className={`${getDeviconClass(tag)} text-[14px] `} />}
-      <span className={twMerge("text-light-700 subtle-medium", classNameText)}>
+      <span
+        className={twMerge("dark:text-light-700 subtle-medium", classNameText)}
+      >
         {tag}
       </span>
       {remove && (

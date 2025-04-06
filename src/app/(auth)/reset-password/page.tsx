@@ -11,7 +11,7 @@ const ResetPassword = async ({
   const { token } = await searchParams;
 
   return (
-    <div className="min-h-screen bg-auth-bg bg-no-repeat bg-center bg-cover dark:bg-auth-bg-dark flex-center">
+    <div className="min-h-screen bg-auth-bg bg-no-repeat bg-center bg-cover dark:bg-auth-bg-dark flex-center px-4 py-8">
       {/* a seperate file is made to just validate the token becuase we cannot use toast in server components and also we cannot make the client component async to get the params */}
       <TokenValidation token={token} />
       <div

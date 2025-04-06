@@ -47,7 +47,7 @@ const page = async ({
   return (
     <>
       {/* header */}
-      <div className="flex gap-3 flex-1">
+      <div className="flex gap-3 flex-1  overflow-x-hidden max-sm:flex-col">
         <Image
           src={user?.image || "/images/person-placeholder.jpeg"}
           alt="user-image"

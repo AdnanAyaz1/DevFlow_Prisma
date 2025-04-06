@@ -100,7 +100,7 @@ const SignUp = () => {
   };
 
   return (
-    <div className="min-h-screen bg-auth-bg bg-no-repeat bg-center bg-cover dark:bg-auth-bg-dark flex-center py-10 font-inter ">
+    <div className="min-h-screen bg-auth-bg bg-no-repeat bg-center bg-cover dark:bg-auth-bg-dark flex-center  font-inter  px-4 py-8">
       <AuthFormsWrapper type="Sign Up">
         <Form {...form}>
           <form

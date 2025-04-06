@@ -18,7 +18,7 @@ const SocialAuthButtons = () => {
   };
 
   return (
-    <div className="mt-[36px] flex gap-[10px]">
+    <div className="mt-[36px] max-sm:flex-col  flex gap-[10px]">
       <Button
         className="flex-1 py-[15px] bg-white dark:bg-dark-400 rounded-lg flex-center gap-2 h-[48px] dark:hover:bg-dark-400/70 active:scale-95 duration-150 transition-all ease-in-out"
         disabled={isLoading === "google"}
