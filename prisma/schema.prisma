@@ -80,6 +80,7 @@ model Tag {
   id          String   @id @default(uuid())
   title       String   @unique
   description String?
+  logo        String?
   questions   Int      @default(0)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt

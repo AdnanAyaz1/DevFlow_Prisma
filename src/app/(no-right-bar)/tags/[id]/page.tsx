@@ -51,9 +51,7 @@ export default async function Page({ params, searchParams }: PageProps) {
     <div>
       <div className="flex items-center gap-2 ">
         <h1 className="h1-bold order-2">
-          {tag?.title.toLowerCase() === "js"
-            ? "JavaScript"
-            : tag?.title.toUpperCase()}
+          {tag?.title}
         </h1>
         <i
           className={`${getDeviconClass(tag?.title as string)} text-[20px] order-1 `}

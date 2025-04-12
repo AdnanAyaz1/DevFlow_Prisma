@@ -41,7 +41,7 @@ const SidebarLinks = ({ isMobileNav = false }: { isMobileNav?: boolean }) => {
             {sideBarLink}
           </SheetClose>
         ) : (
-          <div key={i}>{sideBarLink}</div>
+          sideBarLink
         );
       })}
     </div>

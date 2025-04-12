@@ -48,10 +48,11 @@ export async function POST(request: Request) {
           const prompt = `
       Generate a short description for a tag.
       The tag is: ${tagTitle}
-      the tag description should be of 100 words
+      the tag description should be of 100 words, along with the description you have to generate the logo for the tag i am using devicon for the logo so you have to generate the logo for the tag using devicon like devicon-nextjs-colored and then return the name of the tag in Uppercase the description and the logo and if there is no logo then use a logo that is related to the tag and also return colored logo
       Respond with an object of the following format:
-      {
-        "description": "short description of the tag"
+      {"name": "TAG NAME",
+        "description": "short description of the tag",
+        "logo": "logo of the tag"
       }
     `;
 
@@ -81,9 +82,10 @@ export async function POST(request: Request) {
 
           await db.tag.create({
             data: {
-              title: tagTitle,
+              title: parsedText.name,
               questions: 1,
               description: parsedText.description,
+              logo: parsedText.logo,
             },
           });
         }

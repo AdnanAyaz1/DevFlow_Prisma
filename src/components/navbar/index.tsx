@@ -3,7 +3,7 @@ import Logo from "./Logo";
 import GlobalSearch from "../search/GlobalSearch";
 import { DarkModeToggle } from "../dark-mode-toggler";
 import Link from "next/link";
-import { User2 } from "lucide-react";
+import { User2, User2Icon } from "lucide-react";
 import MobileNavigation from "./MobileNavigation";
 import { auth } from "@/auth";
 import Image from "next/image";
@@ -38,7 +38,7 @@ const Navbar = async () => {
             />
           ) : (
             <div className="p-2  border-[2px] rounded-full border-black dark:border-white">
-              <User2 className="w-4 h-4 dark:text-gray-100 text-gray-900" />
+              <User2Icon className="w-4 h-4 dark:text-gray-100 text-gray-900" />
             </div>
           )}
         </Link>

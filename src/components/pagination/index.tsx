@@ -27,21 +27,36 @@ export const PaginationComponent = ({ noOfPages }: { noOfPages: number }) => {
 
   // Determine pagination range
   const pageGroupSize = 10; // Show 10 pages per row
+
   const currentGroup = Math.floor((currentPage - 1) / pageGroupSize);
+  // For example, if currentPage = 13:
+  // (13 - 1) / 10 = 12 / 10 = 1.2 => Math.floor(1.2) = 1
+  // So currentGroup = 1
+
   const startPage = currentGroup * pageGroupSize + 1;
+  // startPage = 1 * 10 + 1 = 11
+
   const endPage = Math.min(startPage + pageGroupSize - 1, noOfPages);
+  // endPage = Math.min(11 + 10 - 1, noOfPages)
+  // => Math.min(20, noOfPages)
+  // If noOfPages = 23, endPage = 20
+  // If noOfPages = 18, endPage = 18
 
   // Create page numbers for the current row
   const pagesArray = Array.from(
     { length: endPage - startPage + 1 },
     (_, i) => startPage + i
   );
+  // pagesArray = array from startPage to endPage inclusive
+  // If startPage = 11 and endPage = 20
+  // => length = 20 - 11 + 1 = 10
+  // => pagesArray = [11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
 
   return (
     <Pagination className="mt-4 flex justify-center">
       <PaginationContent className="flex gap-2">
         {/* Always show First Page when beyond page 10 */}
-        {startPage > 1 && (
+        {startPage > 10 && (
           <PaginationItem>
             <PaginationLink
               onClick={() => handlePageChange(1)}

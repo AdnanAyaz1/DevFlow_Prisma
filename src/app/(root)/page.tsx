@@ -12,7 +12,6 @@ import ErrorState from "@/components/ErrorState";
 export default async function Home({ searchParams }: SearchParams) {
   const awaitedSearchParams = await searchParams;
   const searchQuery = awaitedSearchParams?.search?.toLowerCase() || "";
-  const filter = awaitedSearchParams?.filter?.toLowerCase().split(",") || [];
   const sort = awaitedSearchParams?.sort?.toLowerCase().split(",") || [];
   const pageNumber = awaitedSearchParams?.page || "1";
   const pageLimit = 5;

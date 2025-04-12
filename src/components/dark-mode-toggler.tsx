@@ -25,26 +25,38 @@ export function DarkModeToggle() {
             alt="sun"
             width={23}
             height={23}
-            className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0 "
+            className="h-[1.2rem] w-[1.2rem] dark:hidden"
           />
           <Image
             src="/icons/moon.png"
             alt="sun"
             width={23}
             height={23}
-            className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100 "
+            className=" h-[1.2rem] w-[1.2rem]  hidden dark:block  "
           />
           <span className="sr-only">Toggle theme</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setTheme("light")}>
+      <DropdownMenuContent
+        align="end"
+        className="dark:bg-dark-secondaryRight bg-white"
+      >
+        <DropdownMenuItem
+          onClick={() => setTheme("light")}
+          className="hover:bg-light-500 dark:hover:bg-dark-400 cursor-pointer"
+        >
           Light
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("dark")}>
+        <DropdownMenuItem
+          onClick={() => setTheme("dark")}
+          className="hover:bg-light-500 dark:hover:bg-dark-400 cursor-pointer"
+        >
           Dark
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("system")}>
+        <DropdownMenuItem
+          onClick={() => setTheme("system")}
+          className="hover:bg-light-500 dark:hover:bg-dark-400 cursor-pointer"
+        >
           System
         </DropdownMenuItem>
       </DropdownMenuContent>

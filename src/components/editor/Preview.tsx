@@ -2,11 +2,6 @@ import { Code } from "bright";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import React from "react";
 
-Code.theme = {
-  light: "github-light",
-  dark: "github-dark",
-  lightSelector: "html.light",
-};
 
 const Preview = ({ formattedContent }: { formattedContent: string }) => {
   return (

@@ -76,9 +76,8 @@ const SignUp = () => {
           redirect: false,
         });
 
-        setTimeout(() => {
           router.push(routes.home);
-        }, 500);
+        
       } else {
         toast({
           title: "Error ",

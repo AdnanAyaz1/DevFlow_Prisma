@@ -31,7 +31,6 @@ export default async function MobileNavigation() {
       >
         <SheetHeader>
           <Logo />
-          <SheetTitle className="sr-only">Are you absolutely sure?</SheetTitle>
         </SheetHeader>
         <div className="flex flex-col flex-1 justify-between gap-10   mt-[66px] pb-[33px]">
           {/* Links */}

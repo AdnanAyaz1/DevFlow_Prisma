@@ -109,9 +109,7 @@ const QuestionForm = ({
     if (e.key === "Enter") {
       e.preventDefault();
       const tagInput = normalizeTag(e.currentTarget.value)
-        .trim()
-        .toLowerCase()
-        .replace(/\./g, ""); // Remove dots
+    
 
       // check if the tags are greater than 3
       if (field.value.length >= 3) {
